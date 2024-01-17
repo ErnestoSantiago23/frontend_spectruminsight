@@ -117,20 +117,20 @@ if st.button("Predict"):
     else:
         # Preparar los datos para enviar a la API
         data = {
-            "Months_encoder": respuestas_usuario[0],
-            "Sex": respuestas_usuario[1],
-            "Ethnicity_encoder": respuestas_usuario[2],
-            "Family_mem_with_ASD": respuestas_usuario[3],
-            "A1": respuestas_usuario[4],
-            "A2": respuestas_usuario[5],
-            "A3": respuestas_usuario[6],
-            "A4": respuestas_usuario[7],
-            "A5": respuestas_usuario[8],
-            "A6": respuestas_usuario[9],
-            "A7": respuestas_usuario[10],
-            "A8": respuestas_usuario[11],
-            "A9": respuestas_usuario[12],
-            "A10": respuestas_usuario[13]
+            "months_encoder": respuestas_usuario[0],
+            "sex": respuestas_usuario[1],
+            "ethnicity_encoder": respuestas_usuario[2],
+            "family_mem_with_ASD": respuestas_usuario[3],
+            "a1": respuestas_usuario[4],
+            "a2": respuestas_usuario[5],
+            "a3": respuestas_usuario[6],
+            "a4": respuestas_usuario[7],
+            "a5": respuestas_usuario[8],
+            "a6": respuestas_usuario[9],
+            "a7": respuestas_usuario[10],
+            "a8": respuestas_usuario[11],
+            "a9": respuestas_usuario[12],
+            "a10": respuestas_usuario[13]
         }
 
         # Enviar los datos a la API y recibir la respuesta
