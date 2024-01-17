@@ -118,7 +118,7 @@ if st.button("Predict"):
         # Preparar los datos para enviar a la API
         data = {
             "Months_encoder": respuestas_usuario[0],
-            "sex": respuestas_usuario[1],
+            "Sex": respuestas_usuario[1],
             "Ethnicity_encoder": respuestas_usuario[2],
             "Family_mem_with_ASD": respuestas_usuario[3],
             "A1": respuestas_usuario[4],
@@ -134,13 +134,13 @@ if st.button("Predict"):
         }
 
         # Enviar los datos a la API y recibir la respuesta
-        url = 'http://localhost:8000'
-        response = requests.get(url+'/predict', json=data)
+        url = 'http://127.0.0.1:8000'
+        response = requests.get(url+'/predict', params=data)
 
         if response.status_code == 200:
             result = response.json()
-            prediction = result['prediccion'][0]
-            proba = result['proba'][0]
+            prediction = result['prediccion']
+            proba = result['probability']
 
             # Mostrar el resultado
             if prediction == 1:
@@ -160,41 +160,3 @@ if st.button("Predict"):
 
         else:
             st.error(f"Error in API call: {response.status_code}")
-
-
-# Botón de predicción
-#if st.button("Predict"):
-    # Verificar si todas las preguntas fueron respondidas
-    #if "--" in respuestas_usuario:
-        # Mostrar mensaje de error si alguna pregunta no fue respondida
-        #st.error("Please answer all the questions before proceeding.")
-    #else:
-        # Realizar la predicción usando tu modelo
-        #prediction =predict(model, np.array(respuestas_usuario).reshape(1,-1))
-        #proba = model.predict_proba(np.array(respuestas_usuario).reshape(1,-1))
-
-        # Mostrar el resultado
-        #if prediction == 1:
-            #st.write("There is a {:.2%} chance that the child has autism".format(proba[0, 1]))
-        #else:
-            #st.write("There is a {:.2%} chance that the child does not have autism".format(proba[0, 0]))
-
-        #st.write("**Please do not take these results as infallible. Go to the doctor, if you have not already done so, and verify these results with a professional. In the graph below you can see the possibilities for each case.**")
-
-        #proba_flattened = proba.flatten() * 100
-
-        #classes = model.classes_
-        #fig, ax = plt.subplots()
-        #bars = ax.bar([0, 1], proba_flattened, tick_label=['No', 'Yes'], color=['lightcoral', 'lightgreen'], edgecolor='black')
-        #ax.set_xlabel('Classes')
-        #ax.set_ylabel('Probabilities')
-        #ax.set_title('Probabilities for Each Class')
-        #ax.set_facecolor('#04B2D9')
-        #fig.set_facecolor('#04B2D9')
-
-        # Añadir etiquetas de porcentaje en las barras
-        #for bar in bars:
-            #yval = bar.get_height()
-            #ax.text(bar.get_x() + bar.get_width() / 2.0, yval + 1, f"{yval:.2f}%", ha='center', va='bottom')
-
-        #st.pyplot(fig)
