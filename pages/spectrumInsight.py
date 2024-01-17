@@ -1,18 +1,19 @@
 import streamlit as st
-
 import numpy as np
 import matplotlib.pyplot as plt
-from deteccion_de_autismo.interface.main_local import load_model
-from deteccion_de_autismo.interface.main_local import predict
+#from deteccion_de_autismo.interface.main_local import load_model
+#from deteccion_de_autismo.interface.main_local import predict
+import requests
 
-def local_css(file_name):
-    with open(file_name) as f:
-        st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
+
+#def local_css(file_name):
+    #with open(file_name) as f:
+        #st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
 # Aplicar el CSS
-local_css("style.css")
+#local_css("style.css")
 
-model = load_model()
+#model = load_model()
 
 st.title("SpectrumInsight")
 
@@ -110,40 +111,90 @@ for i, pregunta in enumerate(preguntas):
         st.write(f"*Selected Option for Question {i+1}:* {respuesta}")
         respuestas_usuario.append(mapeo_respuestas.get(respuesta, respuesta))
 
-
-# Botón de predicción
 if st.button("Predict"):
-    # Verificar si todas las preguntas fueron respondidas
     if "--" in respuestas_usuario:
-        # Mostrar mensaje de error si alguna pregunta no fue respondida
         st.error("Please answer all the questions before proceeding.")
     else:
+        # Preparar los datos para enviar a la API
+        data = {
+            "Months_encoder": respuestas_usuario[0],
+            "sex": respuestas_usuario[1],
+            "Ethnicity_encoder": respuestas_usuario[2],
+            "Family_mem_with_ASD": respuestas_usuario[3],
+            "A1": respuestas_usuario[4],
+            "A2": respuestas_usuario[5],
+            "A3": respuestas_usuario[6],
+            "A4": respuestas_usuario[7],
+            "A5": respuestas_usuario[8],
+            "A6": respuestas_usuario[9],
+            "A7": respuestas_usuario[10],
+            "A8": respuestas_usuario[11],
+            "A9": respuestas_usuario[12],
+            "A10": respuestas_usuario[13]
+        }
+
+        # Enviar los datos a la API y recibir la respuesta
+        url = 'http://localhost:8000'
+        response = requests.get(url+'/predict', json=data)
+
+        if response.status_code == 200:
+            result = response.json()
+            prediction = result['prediccion'][0]
+            proba = result['proba'][0]
+
+            # Mostrar el resultado
+            if prediction == 1:
+                st.write(f"There is a {proba[1]:.2%} chance that the child has autism")
+            else:
+                st.write(f"There is a {proba[0]:.2%} chance that the child does not have autism")
+
+            # Visualización de la probabilidad (opcional)
+            fig, ax = plt.subplots()
+            bars = ax.bar(['No Autism', 'Autism'], proba, color=['lightcoral', 'lightgreen'])
+            ax.set_ylabel('Probability')
+            ax.set_title('Prediction Probability')
+            for bar in bars:
+                yval = bar.get_height()
+                ax.text(bar.get_x() + bar.get_width() / 2.0, yval, f"{yval:.2%}", ha='center', va='bottom')
+            st.pyplot(fig)
+
+        else:
+            st.error(f"Error in API call: {response.status_code}")
+
+
+# Botón de predicción
+#if st.button("Predict"):
+    # Verificar si todas las preguntas fueron respondidas
+    #if "--" in respuestas_usuario:
+        # Mostrar mensaje de error si alguna pregunta no fue respondida
+        #st.error("Please answer all the questions before proceeding.")
+    #else:
         # Realizar la predicción usando tu modelo
-        prediction =predict(model, np.array(respuestas_usuario).reshape(1,-1))
-        proba = model.predict_proba(np.array(respuestas_usuario).reshape(1,-1))
+        #prediction =predict(model, np.array(respuestas_usuario).reshape(1,-1))
+        #proba = model.predict_proba(np.array(respuestas_usuario).reshape(1,-1))
 
         # Mostrar el resultado
-        if prediction == 1:
-            st.write("There is a {:.2%} chance that the child has autism".format(proba[0, 1]))
-        else:
-            st.write("There is a {:.2%} chance that the child does not have autism".format(proba[0, 0]))
+        #if prediction == 1:
+            #st.write("There is a {:.2%} chance that the child has autism".format(proba[0, 1]))
+        #else:
+            #st.write("There is a {:.2%} chance that the child does not have autism".format(proba[0, 0]))
 
-        st.write("**Please do not take these results as infallible. Go to the doctor, if you have not already done so, and verify these results with a professional. In the graph below you can see the possibilities for each case.**")
+        #st.write("**Please do not take these results as infallible. Go to the doctor, if you have not already done so, and verify these results with a professional. In the graph below you can see the possibilities for each case.**")
 
-        proba_flattened = proba.flatten() * 100
+        #proba_flattened = proba.flatten() * 100
 
-        classes = model.classes_
-        fig, ax = plt.subplots()
-        bars = ax.bar([0, 1], proba_flattened, tick_label=['No', 'Yes'], color=['lightcoral', 'lightgreen'], edgecolor='black')
-        ax.set_xlabel('Classes')
-        ax.set_ylabel('Probabilities')
-        ax.set_title('Probabilities for Each Class')
-        ax.set_facecolor('#04B2D9')
-        fig.set_facecolor('#04B2D9')
+        #classes = model.classes_
+        #fig, ax = plt.subplots()
+        #bars = ax.bar([0, 1], proba_flattened, tick_label=['No', 'Yes'], color=['lightcoral', 'lightgreen'], edgecolor='black')
+        #ax.set_xlabel('Classes')
+        #ax.set_ylabel('Probabilities')
+        #ax.set_title('Probabilities for Each Class')
+        #ax.set_facecolor('#04B2D9')
+        #fig.set_facecolor('#04B2D9')
 
         # Añadir etiquetas de porcentaje en las barras
-        for bar in bars:
-            yval = bar.get_height()
-            ax.text(bar.get_x() + bar.get_width() / 2.0, yval + 1, f"{yval:.2f}%", ha='center', va='bottom')
+        #for bar in bars:
+            #yval = bar.get_height()
+            #ax.text(bar.get_x() + bar.get_width() / 2.0, yval + 1, f"{yval:.2f}%", ha='center', va='bottom')
 
-        st.pyplot(fig)
+        #st.pyplot(fig)
