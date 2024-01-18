@@ -28,7 +28,7 @@ st.markdown(
 """
 )
 
-st.image('https://media.istockphoto.com/id/1468195688/es/foto/s%C3%ADmbolo-de-rompecabezas-de-color-de-la-conciencia-p%C3%BAblica-para-el-trastorno-del-espectro.jpg?s=2048x2048&w=is&k=20&c=zoM5HITgbAUD_kqctuKaSsEBm3LW81zKtNynB6d4jSE=',
+st.image('https://www.impaqto.net/wp-content/uploads/2016/04/manos-ok.jpg',
          caption='Autism')
 
 url = 'https://www.youtube.com/watch?v=jpk1_JK2WZM'
