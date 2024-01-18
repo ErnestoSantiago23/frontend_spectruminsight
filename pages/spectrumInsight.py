@@ -134,7 +134,7 @@ if st.button("Predict"):
         }
 
         # Enviar los datos a la API y recibir la respuesta
-        url = 'http://127.0.0.1:8000'
+        url = 'https://spectruminsight-e5rx7utlva-ue.a.run.app'
         response = requests.get(url+'/predict', params=data)
 
         if response.status_code == 200:
