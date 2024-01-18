@@ -144,15 +144,35 @@ if st.button("Predict"):
             else:
                 st.write(f"There is a {proba[0]:.2%} chance that the child does not have autism")
 
-            # Visualización de la probabilidad (opcional)
+            st.write("**Please do not take these results as infallible. Go to the doctor, if you have not already done so, and verify these results with a professional. In the graph below you can see the possibilities for each case.**")
+
+            proba_flattened = proba.flatten() * 100
+
+            #classes = model.classes_
             fig, ax = plt.subplots()
+            bars = ax.bar([0, 1], proba_flattened, tick_label=['No', 'Yes'], color=['lightcoral', 'lightgreen'], edgecolor='black')
+            ax.set_xlabel('Classes')
+            ax.set_ylabel('Probabilities')
+            ax.set_title('Probabilities for Each Class')
+            ax.set_facecolor('#04B2D9')
+            fig.set_facecolor('#04B2D9')
+
+        # Añadir etiquetas de porcentaje en las barras
+        for bar in bars:
+            yval = bar.get_height()
+            ax.text(bar.get_x() + bar.get_width() / 2.0, yval + 1, f"{yval:.2f}%", ha='center', va='bottom')
+
+        #st.pyplot(fig)
+
+            # Visualización de la probabilidad (opcional)
+            """fig, ax = plt.subplots()
             bars = ax.bar(['No Autism', 'Autism'], proba, color=['lightcoral', 'lightgreen'])
             ax.set_ylabel('Probability')
             ax.set_title('Prediction Probability')
             for bar in bars:
                 yval = bar.get_height()
                 ax.text(bar.get_x() + bar.get_width() / 2.0, yval, f"{yval:.2%}", ha='center', va='bottom')
-            st.pyplot(fig)
+            st.pyplot(fig)"""
 
         else:
             st.error(f"Error in API call: {response.status_code}")
