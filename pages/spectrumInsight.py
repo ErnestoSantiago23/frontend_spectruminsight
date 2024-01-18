@@ -1,19 +1,15 @@
 import streamlit as st
 import numpy as np
 import matplotlib.pyplot as plt
-#from deteccion_de_autismo.interface.main_local import load_model
-#from deteccion_de_autismo.interface.main_local import predict
 import requests
 
 
-#def local_css(file_name):
-    #with open(file_name) as f:
-        #st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
+def local_css(file_name):
+    with open(file_name) as f:
+        st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
 # Aplicar el CSS
-#local_css("style.css")
-
-#model = load_model()
+local_css("style.css")
 
 st.title("SpectrumInsight")
 
