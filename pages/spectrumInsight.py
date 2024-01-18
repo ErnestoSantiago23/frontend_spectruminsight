@@ -140,9 +140,9 @@ if st.button("Predict"):
 
             # Mostrar el resultado
             if prediction == 1:
-                st.write(f"There is a {proba[1]:.2%} chance that the child has ASC")
+                st.write(f"The answers give a {proba[1]:.2%} probability that the child is on the spectrum")
             else:
-                st.write(f"There is a {proba[0]:.2%} chance that the child does not have ASC")
+                st.write(f"The answers give a {proba[0]:.2%} probability that the child is not on the spectrum")
 
             st.write("**Please do not take these results as infallible. Go to the doctor, if you have not already done so, and verify these results with a professional. In the graph below you can see the possibilities for each case.**")
 

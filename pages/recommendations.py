@@ -12,9 +12,9 @@ def local_css(file_name):
 # Aplicar el CSS
 local_css("style.css")
 
-st.title("Recommendations for Suspected Autism")
+st.title("If you suspect your child might be on the autism spectrum")
 st.write("""
-    If you suspect your child might be on the autism spectrum, it's important to take certain steps to ensure you get the necessary support and resources. Here are some recommendations:
+    It's important to take certain steps to ensure you get the necessary support and resources. Here are some recommendations:
 
     1. **Consult a Professional**: The most important step is to consult with a pediatrician or a child development specialist. They can guide you on the next steps to take.
 
