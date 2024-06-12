@@ -28,7 +28,7 @@ st.markdown(
 """
 )
 
-st.image('https://impulso06.com/wp-content/uploads/2023/08/Guia-para-entender-el-Autismo-Sintomas-y-Causas.png',
+st.image('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXOKG6cFBHJ0j4lZT8fwJK80oe-nk98WQC0w&s',
          caption='Autism')
 
 url = 'https://www.youtube.com/watch?v=jpk1_JK2WZM'
